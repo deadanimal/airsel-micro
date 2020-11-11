@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airsel-dev-api-deployment
+  labels:
+    app: airsel-dev-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: airsel-dev-api
+  template:
+    metadata:
+      labels:
+        app: airsel-dev-api
+    spec:
+      containers:
+      - name: airsel-dev-api
+        image: syafiqpipe/airsel-dev-api:1.0.1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        envFrom:
+          - secretRef:
+              name: airsel-dev-api-secret

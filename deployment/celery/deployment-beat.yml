@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airsel-dev-api-celery-beat
+  labels:
+    deployment: airsel-dev-api-celery-beat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: airsel-dev-api-celery-beat
+  template:
+    metadata:
+      labels:
+        pod: airsel-dev-api-celery-beat
+    spec:
+      containers:
+        - name: airsel-dev-api-celery-beat
+          image: afeezaziz/airsel-dev-api
+          # celery -A airsel-devapi beat -l debug
+          command: ['celery', '-A', 'core', 'beat', '-l', 'debug']
+          envFrom:
+            - secretRef:
+                name: airsel-dev-api-secret   

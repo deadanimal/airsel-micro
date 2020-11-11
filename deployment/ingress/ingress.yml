@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: airsel-dev-my-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "airsel-dev-my-prod"
+spec:
+  tls:
+  - hosts:
+    - airsel-dev.pipe.my
+    - airsel-dev-api.pipe.my
+
+    secretName: airsel-dev-my-prod
+
+  rules:
+  - host: airsel-dev-api.pipe.my
+    http:
+      paths:
+      - backend:
+          serviceName: airsel-dev-api
+          servicePort: 5000    
+  - host: airsel-dev.pipe.my
+    http:
+      paths:
+      - backend:
+          serviceName: airsel-dev-webapp
+          servicePort: 80    

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airsel-dev-api-celery-worker
+  labels:
+    deployment: airsel-dev-api-celery-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: airsel-dev-api-celery-worker
+  template:
+    metadata:
+      labels:
+        pod: airsel-dev-api-celery-worker
+    spec:
+      containers:
+        - name: airsel-dev-api-celery-worker
+          image: syafiqpipe/airsel-dev-api
+          # celery -A airsel-devapi worker -l debug
+          command: ['celery', '-A', 'core', 'worker', '-l', 'info']
+          envFrom:
+            - secretRef:
+                name: airsel-dev-api-secret            
