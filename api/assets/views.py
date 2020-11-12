@@ -111,20 +111,15 @@ class AssetLocationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = AssetLocation.objects.all()
 
-        """
-        if self.request.user.is_anonymous:
-            queryset = Company.objects.none()
-
-        else:
-            user = self.request.user
-            company_employee = CompanyEmployee.objects.filter(employee=user)
-            company = company_employee[0].company
+        # FROM APPLICATION/JSON THROUGH API
+        if bool(self.request.data):
+            from_date = self.request.data['from_date']
+            to_date = self.request.data['to_date']
             
-            if company.company_type == 'AD':
-                queryset = AssetLocation.objects.all()
-            else:
-                queryset = AssetLocation.objects.filter(company=company.id)
-        """
+            if from_date is not None and to_date is not None:
+                # print(AssetLocation.objects.filter(created_date__range=(from_date,to_date)).query)
+                queryset = AssetLocation.objects.filter(created_date__range=(from_date,to_date))
+
         return queryset    
  
 class AssetMeasurementTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -212,19 +207,14 @@ class AssetViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Asset.objects.all()
 
-        """
-        if self.request.user.is_anonymous:
-            queryset = Company.objects.none()
-
-        else:
-            user = self.request.user
-            company_employee = CompanyEmployee.objects.filter(employee=user)
-            company = company_employee[0].company
+        # FROM APPLICATION/JSON THROUGH API
+        if bool(self.request.data):
+            from_date = self.request.data['from_date']
+            to_date = self.request.data['to_date']
             
-            if company.company_type == 'AD':
-                queryset = Asset.objects.all()
-            else:
-                queryset = Asset.objects.filter(company=company.id)
-        """
+            if from_date is not None and to_date is not None:
+                # print(Asset.objects.filter(created_date__range=(from_date,to_date)).query)
+                queryset = Asset.objects.filter(created_date__range=(from_date,to_date))
+
         return queryset    
  

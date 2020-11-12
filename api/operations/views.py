@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
+from django.utils import timezone
+import datetime, pytz
 
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -37,20 +39,16 @@ class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = OperationalReading.objects.all()
 
-        """
-        if self.request.user.is_anonymous:
-            queryset = Company.objects.none()
-
-        else:
-            user = self.request.user
-            company_employee = CompanyEmployee.objects.filter(employee=user)
-            company = company_employee[0].company
+        # FROM APPLICATION/JSON THROUGH API
+        if bool(self.request.data):
+            print("enter bool()")
+            from_date = self.request.data['from_date']
+            to_date = self.request.data['to_date']
             
-            if company.company_type == 'AD':
-                queryset = OperationalReading.objects.all()
-            else:
-                queryset = OperationalReading.objects.filter(company=company.id)
-        """
+            if from_date is not None and to_date is not None:
+                # print(OperationalReading.objects.filter(created_date__range=(from_date,to_date)).query)
+                queryset = OperationalReading.objects.filter(created_date__range=(from_date,to_date))
+
         return queryset    
  
 class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -70,19 +68,15 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = WorkRequest.objects.all()
 
-        """
-        if self.request.user.is_anonymous:
-            queryset = Company.objects.none()
-
-        else:
-            user = self.request.user
-            company_employee = CompanyEmployee.objects.filter(employee=user)
-            company = company_employee[0].company
+        # FROM APPLICATION/JSON THROUGH API
+        if bool(self.request.data):
+            print("enter bool()")
+            from_date = self.request.data['from_date']
+            to_date = self.request.data['to_date']
             
-            if company.company_type == 'AD':
-                queryset = WorkRequest.objects.all()
-            else:
-                queryset = WorkRequest.objects.filter(company=company.id)
-        """
+            if from_date is not None and to_date is not None:
+                # print(WorkRequest.objects.filter(created_date__range=(from_date,to_date)).query)
+                queryset = WorkRequest.objects.filter(created_date__range=(from_date,to_date))
+
         return queryset    
  
