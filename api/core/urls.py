@@ -71,6 +71,16 @@ work_requests_router = router.register(
     'work-requests', WorkRequestViewSet
 )
 
+# Wams app
+
+from wams.views import (
+    WamsViewSet
+)
+
+wams_router = router.register(
+    'wams', WamsViewSet
+)
+
 # Organisations app
 
 from organisations.views import (
