@@ -13,6 +13,8 @@ def get_workorderactivity():
     wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-WORKORDERACTIVITY?WSDL"
     session = Session()
     session.auth = HTTPBasicAuth("RFID_INTEGRATION", "Rfid_1nt")
+    session.trust_env = False
+    session.verify = False
 
     client = Client(wsdl, transport=Transport(session=session),
                     settings=Settings(strict=False, raw_response=True))

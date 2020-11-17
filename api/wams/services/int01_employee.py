@@ -13,9 +13,11 @@ def get_employee():
     wsdl = "https://pasb-dev-uwa-iws.oracleindustry.com/ouaf/webservices/CM-EMPLOYEE?WSDL"
     session = Session()
     session.auth = HTTPBasicAuth("RFID_INTEGRATION", "Rfid_1nt")
+    session.trust_env = False
+    session.verify = False
 
     client = Client(wsdl, transport=Transport(session=session),
-                    settings=Settings(strict=False, raw_response=True))
+                    settings=Settings(force_https=False, strict=False, raw_response=True))
 
     request_data = {
         'FROM_DATE': '2020-01-01T14:00:00.000+00:00',
