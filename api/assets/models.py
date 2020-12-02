@@ -9,81 +9,55 @@ from simple_history.models import HistoricalRecords
 
 from core.helpers import PathAndRename
 
-
-class AssetLocationCostCenter(models.Model):
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    cost_center = models.CharField(max_length=100, default='NA')
-    percentage = models.FloatField(default=0)
-
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
-
-    class meta:
-        ordering = ['-created_date']
-    
-    def __str__(self):
-        return self.cost_center
-
-class AssetLocationCriticalityReason(models.Model):
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    criticality_reason = models.CharField(max_length=100, default='NA')
-
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
-
-    class meta:
-        ordering = ['-created_date']
-    
-    def __str__(self):
-        return self.criticality_reason
+from jsonfield import JSONField
 
 class AssetLocation(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    location_type = models.CharField(max_length=100, default='NA')
-    locatin_disposition = models.CharField(max_length=100, default='NA')
-    description = models.CharField(max_length=100, default='NA')
-    parent_loc_or_org = models.CharField(max_length=100, default='NA')
-    work_request_approval_profile = models.CharField(max_length=100, default='NA')
-    owning_org = models.CharField(max_length=100, default='NA')
+    location_type = models.CharField(max_length=100)
+    locatin_disposition = models.CharField(max_length=100)
+    bo = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
+    parent_loc_or_org = models.CharField(max_length=100)
+    work_request_approval_profile = models.CharField(max_length=100)
+    owning_org = models.CharField(max_length=100)
     
-    building = models.CharField(max_length=100, default='NA')
-    room = models.CharField(max_length=100, default='NA')
-    position = models.CharField(max_length=100, default='NA')
-    country = models.CharField(max_length=100, default='NA')
-    address_1 = models.CharField(max_length=100, default='NA')
-    address_2 = models.CharField(max_length=100, default='NA')
-    address_3 = models.CharField(max_length=100, default='NA')
-    cross_street = models.CharField(max_length=100, default='NA')
-    city = models.CharField(max_length=100, default='NA')
-    suburb = models.CharField(max_length=100, default='NA')
-    state = models.CharField(max_length=100, default='NA')
-    postal = models.CharField(max_length=100, default='NA')
-    location_class = models.CharField(max_length=100, default='NA')
+    building = models.CharField(max_length=100)
+    room = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    address_1 = models.CharField(max_length=100)
+    address_2 = models.CharField(max_length=100)
+    address_3 = models.CharField(max_length=100)
+    cross_street = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    suburb = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    postal = models.CharField(max_length=100)
+    location_class = models.CharField(max_length=100)
     
-    main_contact = models.CharField(max_length=100, default='NA')
-    maintenance_manager = models.CharField(max_length=100, default='NA')
-    planner = models.CharField(max_length=100, default='NA')
-    cost_center = models.ManyToManyField(AssetLocationCostCenter, blank=True, null=True)
+    main_contact = models.CharField(max_length=100)
+    maintenance_manager = models.CharField(max_length=100)
+    planner = models.CharField(max_length=100)
+    cost_center = models.CharField(max_length=100, blank=True, null=True)
+    percentage = models.FloatField(default=0)
 
-    rcm_system = models.CharField(max_length=100, default='NA')
-    environmental_rating = models.CharField(max_length=100, default='NA')
-    service_condition = models.CharField(max_length=100, default='NA')
-    duty_cycle = models.CharField(max_length=100, default='NA')
-    backlog_group = models.CharField(max_length=100, default='NA')
-    run_to_failure = models.CharField(max_length=100, default='NA')
-    breaker = models.CharField(max_length=100, default='NA')
-    runtime_source = models.CharField(max_length=100, default='NA')
-    tag_number = models.CharField(max_length=100, default='NA')
-    site_location = models.CharField(max_length=100, default='NA')
-    point_id = models.CharField(max_length=100, default='NA')
-    service_area = models.CharField(max_length=100, default='NA')
-    latitude = models.CharField(max_length=100, default='NA')
-    longitude = models.CharField(max_length=100, default='NA')
-    asset_criticality = models.CharField(max_length=100, default='NA')
-    criticality_reason = models.ManyToManyField(AssetLocationCriticalityReason, null=True, blank=True)
+    rcm_system = models.CharField(max_length=100)
+    environmental_rating = models.CharField(max_length=100)
+    service_condition = models.CharField(max_length=100)
+    duty_cycle = models.CharField(max_length=100)
+    backlog_group = models.CharField(max_length=100)
+    run_to_failure = models.CharField(max_length=100)
+    breaker = models.CharField(max_length=100)
+    runtime_source = models.CharField(max_length=100)
+    tag_number = models.CharField(max_length=100)
+    site_location = models.CharField(max_length=100)
+    point_id = models.CharField(max_length=100)
+    service_area = models.CharField(max_length=100)
+    latitude = models.CharField(max_length=100)
+    longitude = models.CharField(max_length=100)
+    asset_criticality = models.CharField(max_length=100)
+    criticality_reason = models.CharField(max_length=100)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -96,7 +70,7 @@ class AssetLocation(models.Model):
 
 class AssetMeasurementType(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    measurement_type = models.CharField(max_length=100, default='NA')
+    measurement_type = models.CharField(max_length=100, null=True, blank=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
@@ -110,8 +84,8 @@ class AssetMeasurementType(models.Model):
 
 class AssetAttribute(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    characteristic_type = models.CharField(max_length=100, default='NA')
-    adhoc_value = models.CharField(max_length=100, default='NA')
+    characteristic_type = models.CharField(max_length=100, null=True, blank=True)
+    adhoc_value = models.CharField(max_length=100, null=True, blank=True)
     characteristic_value = models.CharField(max_length=100, null=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
@@ -127,31 +101,31 @@ class AssetAttribute(models.Model):
 class Asset(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    asset_id = models.CharField(max_length=100, default='NA')
-    asset_type = models.CharField(max_length=100, default='NA')
-    transaction_type = models.CharField(max_length=100, default='NA')
-    description = models.CharField(max_length=100, default='NA')
-    bo = models.CharField(max_length=100, default='NA')
-    bo_status = models.CharField(max_length=100, default='NA')
+    asset_id = models.CharField(max_length=100, null=True, blank=True)
+    asset_type = models.CharField(max_length=100, null=True, blank=True)
+    transaction_type = models.CharField(max_length=100, null=True, blank=True)
+    description = models.CharField(max_length=100, null=True, blank=True)
+    bo = models.CharField(max_length=100, null=True, blank=True)
+    bo_status = models.CharField(max_length=100, null=True, blank=True)
     owning_access_group = models.CharField(max_length=100, null=True, blank=True)
     effective_datetime = models.DateTimeField(auto_now=True)
-    node_id = models.CharField(max_length=100, default='NA')
-    badge_no = models.CharField(max_length=100, default='NA')
-    serial_no = models.CharField(max_length=100, default='NA')
-    pallet_no = models.CharField(max_length=100, default='NA')
-    handed_over_asset = models.CharField(max_length=100, default='NA')
-    fixed_asset_no = models.CharField(max_length=100, default='NA')
-    scada_id = models.CharField(max_length=100, default='NA')
-    condition_rating = models.CharField(max_length=100, default='NA')
-    condifence_rating = models.CharField(max_length=100, default='NA')
-    maintenance_specification = models.CharField(max_length=100, default='NA')
-    measurement_types = models.ManyToManyField(AssetMeasurementType, null=True)
-    bom_part_id = models.CharField(max_length=100, default='NA')
-    attached_to_asset_id = models.CharField(max_length=100, default='NA')
-    vehicle_identification_num = models.CharField(max_length=100, default='NA')
-    license_number = models.CharField(max_length=100, default='NA')
-    purchase_order_num = models.CharField(max_length=100, default='NA')
-    location_id = models.CharField(max_length=100, default='NA')
+    node_id = models.CharField(max_length=100, null=True, blank=True)
+    badge_no = models.CharField(max_length=100, null=True, blank=True)
+    serial_no = models.CharField(max_length=100, null=True, blank=True)
+    pallet_no = models.CharField(max_length=100, null=True, blank=True)
+    handed_over_asset = models.CharField(max_length=100, null=True, blank=True)
+    fixed_asset_no = models.CharField(max_length=100, null=True, blank=True)
+    scada_id = models.CharField(max_length=100, null=True, blank=True)
+    condition_rating = models.CharField(max_length=100, null=True, blank=True)
+    condifence_rating = models.CharField(max_length=100, null=True, blank=True)
+    maintenance_specification = models.CharField(max_length=100, null=True, blank=True)
+    measurement_types = JSONField(null=True)
+    bom_part_id = models.CharField(max_length=100, null=True, blank=True)
+    attached_to_asset_id = models.CharField(max_length=100, null=True, blank=True)
+    vehicle_identification_num = models.CharField(max_length=100, null=True, blank=True)
+    license_number = models.CharField(max_length=100, null=True, blank=True)
+    purchase_order_num = models.CharField(max_length=100, null=True, blank=True)
+    location_id = models.CharField(max_length=100, null=True, blank=True)
     metrology_firmware = models.CharField(max_length=100, default='NA')
     nic_firmware = models.CharField(max_length=100, default='NA')
     configuration = models.CharField(max_length=100, default='NA')

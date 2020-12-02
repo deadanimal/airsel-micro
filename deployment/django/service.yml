@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: airsel-dev-api
+  name: airsel-micro-api
   labels:
-    service: airsel-dev-api
+    service: airsel-micro-api
 spec:
   selector:
-    app: airsel-dev-api
+    app: airsel-micro-api
   ports:
   - port: 5000
     targetPort: 5000

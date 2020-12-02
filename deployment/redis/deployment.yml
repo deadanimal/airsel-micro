@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: airsel-dev-api-redis
+  name: airsel-micro-api-redis
   labels:
-    deployment: airsel-dev-api-redis
+    deployment: airsel-micro-api-redis
 spec:
   selector:
     matchLabels:
-      pod: airsel-dev-api-redis
+      pod: airsel-micro-api-redis
   replicas: 1
   template:
     metadata:
       labels:
-        pod: airsel-dev-api-redis
+        pod: airsel-micro-api-redis
     spec:
       containers:
       - name: master

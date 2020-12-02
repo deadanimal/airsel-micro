@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: airsel-dev-api-deployment
+  name: airsel-micro-api-deployment
   labels:
-    app: airsel-dev-api
+    app: airsel-micro-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: airsel-dev-api
+      app: airsel-micro-api
   template:
     metadata:
       labels:
-        app: airsel-dev-api
+        app: airsel-micro-api
     spec:
       containers:
-      - name: airsel-dev-api
-        image: syafiqpipe/airsel-dev-api:1.0.3
+      - name: airsel-micro-api
+        image: syafiqpipe/airsel-micro-api:1.0.4
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
         envFrom:
           - secretRef:
-              name: airsel-dev-api-secret
+              name: airsel-micro-api-secret

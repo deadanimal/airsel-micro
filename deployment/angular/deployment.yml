@@ -3,26 +3,26 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    name: airsel-dev-webapp
-  name: airsel-dev-webapp
+    name: airsel-micro-webapp
+  name: airsel-micro-webapp
 spec:
   progressDeadlineSeconds: 2147483647
   replicas: 1
   selector:
     matchLabels:
-      app: airsel-dev-webapp
+      app: airsel-micro-webapp
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: airsel-dev-webapp
+        app: airsel-micro-webapp
     spec:
       containers:
-      - image: syafiqpipe/airsel-dev-webapp:1.0.21
+      - image: syafiqpipe/airsel-micro-webapp:1.0.21
         imagePullPolicy: Always   
-        name: airsel-dev-webapp
+        name: airsel-micro-webapp
         resources: {}
-        terminationMessagePath: /dev/termination-log
+        terminationMessagePath: /micro/termination-log
         terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always

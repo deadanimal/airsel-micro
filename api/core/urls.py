@@ -24,29 +24,19 @@ router = NestedDefaultRouter()
 
 # Assets app
 from assets.views import (
-    AssetLocationCostCenterViewSet,
-    AssetLocationCriticalityReasonViewSet,
     AssetLocationViewSet,
     AssetMeasurementTypeViewSet,
     AssetAttributeViewSet,
     AssetViewSet
 )
 
-asset_location_cost_centers_router = router.register(
-    'asset-location-cost-centers', AssetLocationViewSet
-)
-
-asset_location_criticalitys_router = router.register(
-    'asset-location-criticalities', AssetLocationCriticalityReasonViewSet
-)
-
 asset_locations_router = router.register(
     'asset-locations', AssetLocationViewSet
 )
 
-asset_measurement_types_router = router.register(
-    'asset-measurement-types', AssetMeasurementTypeViewSet
-)
+# asset_measurement_types_router = router.register(
+#     'asset-measurement-types', AssetMeasurementTypeViewSet
+# )
 
 asset_attributes_router = router.register(
     'asset-attributes', AssetAttributeViewSet
@@ -60,7 +50,12 @@ assets_router = router.register(
 
 from operations.views import (
     OperationalReadingViewSet,
-    WorkRequestViewSet
+    WorkRequestViewSet,
+    WorkOrderActivityViewSet,
+    AssetLocationAssetListViewSet,
+    ServiceHistoryViewSet,
+    QuestionViewSet,
+    ValidValueViewSet
 )
 
 operational_readings_router = router.register(
@@ -70,6 +65,26 @@ operational_readings_router = router.register(
 work_requests_router = router.register(
     'work-requests', WorkRequestViewSet
 )
+
+work_order_activities_router = router.register(
+    'work-order-activities', WorkOrderActivityViewSet
+)
+
+# asset_location_asset_lists_router = router.register(
+#     'asset-location-asset-lists', AssetLocationAssetListViewSet
+# )
+
+# service_histories_router = router.register(
+#     'service-histories', ServiceHistoryViewSet
+# )
+
+# questions_router = router.register(
+#     'questions', QuestionViewSet
+# )
+
+# valid_values_router = router.register(
+#     'valid-values', ValidValueViewSet
+# )
 
 # Wams app
 

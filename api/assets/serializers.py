@@ -9,26 +9,11 @@ from rest_framework import serializers
 from django.utils.timezone import now
 
 from .models import (
-    AssetLocationCostCenter,
-    AssetLocationCriticalityReason,
     AssetLocation,
     AssetMeasurementType,
     AssetAttribute,
     Asset
 )
-
-class AssetLocationCostCenterSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = AssetLocationCostCenter
-        fields = '__all__'
-
-class AssetLocationCriticalityReasonSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = AssetLocationCriticalityReason
-        fields = '__all__'
-
 
 class AssetLocationSerializer(serializers.ModelSerializer):
 

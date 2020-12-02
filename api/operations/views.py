@@ -14,12 +14,23 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import (
     OperationalReading,
-    WorkRequest
+    WorkRequest,
+    WorkOrderActivity,
+    AssetLocationAssetList,
+    ServiceHistory,
+    Question,
+    ValidValue
 )
 
 from .serializers import (
     OperationalReadingSerializer,
-    WorkRequestSerializer
+    WorkRequestSerializer,
+    WorkOrderActivitySerializer,
+    WorkOrderActivityExtendedSerializer,
+    AssetLocationAssetListSerializer,
+    ServiceHistorySerializer,
+    QuestionSerializer,
+    ValidValueSerializer
 )
 
 class OperationalReadingViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
@@ -77,6 +88,167 @@ class WorkRequestViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             if from_date is not None and to_date is not None:
                 # print(WorkRequest.objects.filter(created_date__range=(from_date,to_date)).query)
                 queryset = WorkRequest.objects.filter(created_date__range=(from_date,to_date))
+
+        return queryset    
+ 
+
+class WorkOrderActivityViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = WorkOrderActivity.objects.all()
+    serializer_class = WorkOrderActivitySerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = WorkOrderActivity.objects.all()
+
+        if bool(self.request.data):
+            # print('test')
+            if 'from_date' in self.request.data:
+                # print('ada')
+                from_date = self.request.data['from_date']
+                to_date = self.request.data['to_date']
+                
+                if from_date is not None and to_date is not None:
+                    # print(AssetLocation.objects.filter(created_date__range=(from_date,to_date)).query)
+                    queryset = WorkOrderActivity.objects.filter(created_date__range=(from_date,to_date))
+
+        return queryset    
+    
+    @action(methods=['GET'], detail=False)
+    def extended_all(self, request, *args, **kwargs):  
+        queryset = WorkOrderActivity.objects.all()
+        serializer = WorkOrderActivityExtendedSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    @action(methods=['GET'], detail=True)
+    def extended(self, request, *args, **kwargs):  
+
+        work_order_activity = self.get_object()
+
+        serializer = WorkOrderActivityExtendedSerializer(work_order_activity)
+        return Response(serializer.data)
+ 
+
+class AssetLocationAssetListViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = AssetLocationAssetList.objects.all()
+    serializer_class = AssetLocationAssetListSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = AssetLocationAssetList.objects.all()
+
+        if bool(self.request.data):
+            if 'from_date' in self.request.data:
+                from_date = self.request.data['from_date']
+                to_date = self.request.data['to_date']
+                
+                if from_date is not None and to_date is not None:
+                    # print(AssetLocation.objects.filter(created_date__range=(from_date,to_date)).query)
+                    queryset = AssetLocationAssetList.objects.filter(created_date__range=(from_date,to_date))
+                
+        return queryset    
+ 
+
+class ServiceHistoryViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = ServiceHistory.objects.all()
+    serializer_class = ServiceHistorySerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = ServiceHistory.objects.all()
+
+        if bool(self.request.data):
+            if 'from_date' in self.request.data:
+                from_date = self.request.data['from_date']
+                to_date = self.request.data['to_date']
+                
+                if from_date is not None and to_date is not None:
+                    # print(AssetLocation.objects.filter(created_date__range=(from_date,to_date)).query)
+                    queryset = ServiceHistory.objects.filter(created_date__range=(from_date,to_date))
+                
+        return queryset    
+ 
+
+class QuestionViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = Question.objects.all()
+
+        if bool(self.request.data):
+            if 'from_date' in self.request.data:
+                from_date = self.request.data['from_date']
+                to_date = self.request.data['to_date']
+                
+                if from_date is not None and to_date is not None:
+                    # print(AssetLocation.objects.filter(created_date__range=(from_date,to_date)).query)
+                    queryset = Question.objects.filter(created_date__range=(from_date,to_date))
+
+        return queryset    
+ 
+
+class ValidValueViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
+    queryset = ValidValue.objects.all()
+    serializer_class = ValidValueSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+
+    def get_permissions(self):
+        if self.action == 'list':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [AllowAny]
+
+        return [permission() for permission in permission_classes]    
+
+    
+    def get_queryset(self):
+        queryset = ValidValue.objects.all()
+
+        if bool(self.request.data):
+            if 'from_date' in self.request.data:
+                from_date = self.request.data['from_date']
+                to_date = self.request.data['to_date']
+                
+                if from_date is not None and to_date is not None:
+                    # print(AssetLocation.objects.filter(created_date__range=(from_date,to_date)).query)
+                    queryset = ValidValue.objects.filter(created_date__range=(from_date,to_date))
 
         return queryset    
  
